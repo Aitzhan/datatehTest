@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.aitzhan.datatehTest.model.EmployeeEntity" table="employee" schema="public" catalog="postgres">
+        <id name="employeeId">
+            <column name="employee_id" sql-type="integer"/>
+        </id>
+        <property name="firstname">
+            <column name="firstname" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="lastname">
+            <column name="lastname" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="patronymic">
+            <column name="patronymic" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="position">
+            <column name="position" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

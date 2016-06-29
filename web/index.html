@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://java.sun.com/jsf/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестовое задание</title>
+    <link rel="stylesheet" href="js/libs/dojo/../dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="js/libs/gridx/resources/claro/Gridx.css"/>
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<script>
+    var dojoConfig = {
+        async: true,
+        packages: [
+            {
+                name: "app",
+                location: location.pathname.replace(/\/[^/]+$/, '') + "/js/app"
+            },
+            {
+                name: "js",
+                location: location.pathname.replace(/\/[^/]+$/, '') + "/js"
+            },
+            {
+                name: "models",
+                location: location.pathname.replace(/\/[^/]+$/, '') + "/js/models"
+            },
+            {
+                name: "common",
+                location: location.pathname.replace(/\/[^/]+$/, '') + "/js/common"
+            }
+        ]
+    }
+</script>
+<script src="js/libs/dojo/dojo.js"></script>
+<script>
+
+    require([
+                "app/app",
+                "models/employeeModel"
+            ],
+            function (app, EmployeeModel) {
+                if (window.user === undefined) {
+                    EmployeeModel.getList().then(function (employeeList) {
+                        if (employeeList.length === 0) {
+                            // Заполняем БД тестовыми данными
+                            dojo.xhrGet({
+                                url: 'rest/test/create'
+                            }).then(function () {
+                                location.reload();
+                            })
+                        }
+                        // наш пользователь - последний добавленный
+                        var user = employeeList[employeeList.length - 1];
+                        app.run(user)
+                    });
+                }
+                else app.run(user);
+            });
+</script>
+<body class="claro">
+<div id="appLayout" style="width: 100%; height:100%"></div>
+</body>
+</html>
